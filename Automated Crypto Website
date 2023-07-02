@@ -23,4 +23,10 @@ try:
 except (ConnectionError, Timeout, TooManyRedirects) as e:
   print(e)
 
+import pandas as pd
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+df = pd.json_normalize(data['data'])
+df['timestamp'] = pd.to_datetime('now', utc=True)
+df
 
