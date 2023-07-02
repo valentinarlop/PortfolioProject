@@ -121,18 +121,3 @@ where dea.continent is not null
 Order by 2,3
 Select *, (RollingPeopleVaccinated/Population)*100 as RatePopulationVaccinated
 From #PercentPopulationVaccinated
-
-
-
--- Creating View to store data for later visualizations
-
-Create View PercentPopulationVaccinated as
-Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(CONVERT(int,vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location
-, dea.Date) as RollingPeopleVaccinated
-From PortafolioProject..CovidDeaths dea
-Join PortafolioProject..CovidVaccinations vac
-	On dea.location = vac.location
-	and dea.date = vac.date
-where dea.continent is not null 
-
